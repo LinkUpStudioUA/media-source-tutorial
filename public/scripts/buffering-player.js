@@ -59,11 +59,11 @@ $(function () {
                 callback();
             };
             xhr.ontimeout = function () {
-                var retryAmount = !retryCount ? 0 : retryCount;
-                if (retryCount == 2) {
-                    console.err("Given up downloading")
+                var retryAmount = retryCount || 0;
+                if (retryAmount > 1) {
+                    console.error("Given up downloading")
                 } else {
-                    cluster._getClusterData(callback, retryCount++);
+                    cluster._getClusterData(callback, retryAmount + 1);
                 }
             }
         };
